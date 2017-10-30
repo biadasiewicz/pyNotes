@@ -6,6 +6,7 @@ def test_init():
     db = Database(":memory:")
     db.close()
     assert(True)
+
 def test_reopen():
     path = "db"
     db = Database(path)
