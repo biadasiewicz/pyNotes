@@ -21,4 +21,5 @@ def test_insert():
     db = Database(":memory:")
     n = Note("hello, world #t1 #t2 #t1")
     db.insert_note(n)
+    assert(db.count() == 1)
     db.close()

@@ -23,6 +23,9 @@ class Database:
         for tag in n.tags:
             self.cur.execute("insert into tags(tagid, tagtext) values(?, ?)",\
                 (id, tag))
+    def count(self):
+        self.cur.execute("select noteid from notes")
+        return len(self.cur.fetchall())
 
     def close(self):
         self.cur.close()
