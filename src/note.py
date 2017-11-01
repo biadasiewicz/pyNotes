@@ -1,7 +1,7 @@
-import time, re
+import datetime, re
 
 class Note:
-    def __init__(self, text, timestamp = time.time()):
+    def __init__(self, text, timestamp = datetime.datetime.now()):
         self.timestamp = timestamp
         self.set_text(text)
     def set_text(self, text):
@@ -16,14 +16,3 @@ class Note:
         return "%f: %s" % (self.timestamp, self.text)
     def __repr__(self):
         return "(%f;%s)" % (self.timestamp, self.text)
-
-def adapt_note(n):
-    return ("%f;%s" % (n.timestamp, n.text)).encode('ascii')
-def convert_note(s):
-    loaded = list(map(str, s.split(b";")))
-    assert(len(loaded) == 2)
-    ts = float(loaded[0][2:len(loaded[0]) - 1])
-    t = loaded[1][2:len(loaded[1]) - 1]
-    n = Note(t, ts)
-    return n
-
