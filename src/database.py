@@ -1,4 +1,5 @@
 import note, sqlite3
+from datetime import datetime
 
 class Database:
     def __init__(self, path):
@@ -18,15 +19,19 @@ class Database:
     def insert_note(self, n):
         self.cur.execute("insert into notes(notets, notetext) values(?, ?)",\
             (n.timestamp, n.text))
-        self.cur.execute("select max(noteid) from notes")
-        id = self.cur.fetchone()[0]
+        id = self.max_id()
         for tag in n.tags:
             self.cur.execute("insert into tags(tagid, tagtext) values(?, ?)",\
                 (id, tag))
+    def delete_note(self, id):
+        self.cur.execute("delete from tags where tagid=?", (id,))
+        self.cur.execute("delete from notes where noteid=?", (id,))
     def count(self):
         self.cur.execute("select noteid from notes")
         return len(self.cur.fetchall())
-
+    def max_id(self):
+        self.cur.execute("select max(noteid) from notes")
+        return self.cur.fetchone()[0]
     def close(self):
         self.cur.close()
         self.con.close()

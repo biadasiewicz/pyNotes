@@ -23,3 +23,16 @@ def test_insert():
     db.insert_note(n)
     assert(db.count() == 1)
     db.close()
+
+def test_delete():
+    db = Database(":memory:")
+    n = Note("hello, world #t1 #t2 #t1")
+    n2 = Note("goodbye #t1 #3")
+    db.insert_note(n)
+    db.insert_note(n2)
+    assert(db.count() == 2)
+    db.delete_note(1)
+    assert(db.count() == 1)
+    db.delete_note(2)
+    assert(db.count() == 0)
+    db.close()
