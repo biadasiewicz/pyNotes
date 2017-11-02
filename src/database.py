@@ -1,5 +1,4 @@
 import note, sqlite3
-from datetime import datetime
 
 class Database:
     def __init__(self, path):
@@ -26,6 +25,11 @@ class Database:
     def delete_note(self, id):
         self.cur.execute("delete from tags where tagid=?", (id,))
         self.cur.execute("delete from notes where noteid=?", (id,))
+    def select_date_range(self, a, b):
+        self.cur.execute("""select noteid, notets notetext from notes
+            where notets >= (?) and notets <= (?)
+            order by notets asc""", (a, b,))
+        return self.cur.fetchall()
     def count(self):
         self.cur.execute("select noteid from notes")
         return len(self.cur.fetchall())
