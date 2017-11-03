@@ -69,4 +69,7 @@ def test_select_tag():
     assert(len(notes) == 1)
     notes = db.select_tag("notag")
     assert(len(notes) == 0)
+    db.delete_note(1)
+    notes = db.select_tag("t2")
+    assert(len(notes) == 0)
     db.close()
