@@ -12,5 +12,4 @@ def test_equal():
     ts = datetime.datetime.now()
     n1 = note.Note(text, ts)
     n2 = note.Note(text, ts)
-    print(n2)
-    assert(n1 != n2)
+    assert(n1 == n2)

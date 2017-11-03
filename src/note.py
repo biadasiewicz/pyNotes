@@ -4,6 +4,7 @@ class Note:
     def __init__(self, text, timestamp = datetime.datetime.now()):
         self.timestamp = timestamp
         self.set_text(text)
+        self.__num = 123
 
     def set_text(self, text):
         self.tags = set(re.findall(r"#(\w+)", text))
