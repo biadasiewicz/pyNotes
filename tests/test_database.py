@@ -2,6 +2,7 @@ from database import Database
 from os import remove
 import sqlite3
 from note import Note
+from datetime import datetime, timedelta
 
 def test_init():
     db = Database(":memory:")
@@ -39,7 +40,6 @@ def test_delete():
 
 def test_select_date_range():
     db = Database(":memory:")
-    from datetime import datetime, timedelta
     d1 = datetime.now()
     d2 = datetime.now() + timedelta(days=1)
     d3 = datetime.now() + timedelta(days=2)
@@ -54,3 +54,19 @@ def test_select_date_range():
     assert(len(s1) == 3)
     s2 = db.select_date_range(d1, d2)
     assert(len(s2) == 2)
+    db.close()
+
+def test_select_tag():
+    db = Database(":memory:")
+    n1 = Note("#t1 #t2")
+    n2 = Note("#t1" )
+    db.insert_note(n1)
+    db.insert_note(n2)
+    assert(db.count() == 2)
+    notes = db.select_tag("t1")
+    assert(len(notes) == 2)
+    notes = db.select_tag("t2")
+    assert(len(notes) == 1)
+    notes = db.select_tag("notag")
+    assert(len(notes) == 0)
+    db.close()

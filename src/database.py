@@ -29,10 +29,21 @@ class Database:
         self.cur.execute("delete from notes where noteid=?", (id,))
 
     def select_date_range(self, a, b):
-        self.cur.execute("""select noteid, notets notetext from notes
+        self.cur.execute("""select noteid, notets, notetext from notes
             where notets >= (?) and notets <= (?)
             order by notets asc""", (a, b,))
         return self.cur.fetchall()
+
+    def select_tag(self, tag):
+        self.cur.execute("select tagid from tags where tagtext=(?)", (tag,))
+        rows = self.cur.fetchall()
+        notes = []
+        for row in rows:
+            self.cur.execute("""select notets, notetext from notes
+                where noteid=(?)""", (row[0],))
+            r = self.cur.fetchone()
+            notes.append((row[0], note.Note(r[1], r[0])))
+        return notes
 
     def count(self):
         self.cur.execute("select noteid from notes")
