@@ -13,11 +13,7 @@ class Note:
         return tag in self.tags
 
     def __eq__(self, other):
-        import math
-        return math.isclose(self.timestamp, other.timestamp) and self.text == other.text
+        return self.timestamp == other.timestamp and self.text == other.text
 
     def __str__(self):
-        return "%f: %s" % (self.timestamp, self.text)
-
-    def __repr__(self):
-        return "(%f;%s)" % (self.timestamp, self.text)
+        return "%s\n\t %s" % (self.timestamp, self.text)
