@@ -55,4 +55,5 @@ class Database:
 
     def close(self):
         self.cur.close()
+        self.con.commit()
         self.con.close()
