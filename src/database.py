@@ -28,6 +28,13 @@ class Database:
         self.cur.execute("delete from tags where tagid=?", (id,))
         self.cur.execute("delete from notes where noteid=?", (id,))
 
+    def select_all(self):
+        self.cur.execute("select noteid, notetext, notets from notes order by notets asc")
+        notes = []
+        for row in self.cur.fetchall():
+            notes.append((row[0], note.Note(row[1], row[2])))
+        return notes
+
     def select_date_range(self, a, b):
         self.cur.execute("""select noteid, notets, notetext from notes
             where notets >= (?) and notets <= (?)
