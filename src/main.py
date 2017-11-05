@@ -1,4 +1,4 @@
-import os, argparse, note, database
+import os, argparse, note, database, datetime
 
 parser = argparse.ArgumentParser(
     prog="notes",
@@ -40,9 +40,20 @@ if args.action == "write":
         for n in notes:
             db.insert_note(n)
 elif args.action == "read":
-    notes = None
+    notes = []
     if args.tag:
         notes = db.select_tag(args.tag)
+    elif args.date:
+        if args.date == "today":
+            notes = db.select_date_range(
+                datetime.datetime.now() - datetime.timedelta(days=1),
+                datetime.datetime.now())
+        elif args.date == "yesterday":
+            notes = db.select_date_range(
+                datetime.datetime.now() - datetime.timedelta(days=2),
+                datetime.datetime.now())
+        else:
+            print("error: invalid date format:", args.date)
     else:
         notes = db.select_all()
     for n in notes:

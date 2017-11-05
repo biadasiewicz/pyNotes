@@ -39,7 +39,10 @@ class Database:
         self.cur.execute("""select noteid, notets, notetext from notes
             where notets >= (?) and notets <= (?)
             order by notets asc""", (a, b,))
-        return self.cur.fetchall()
+        notes = []
+        for row in self.cur.fetchall():
+            notes.append((row[0], note.Note(row[2], row[1])))
+        return notes
 
     def select_tag(self, tag):
         self.cur.execute("select tagid from tags where tagtext=(?)", (tag,))
