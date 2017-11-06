@@ -53,7 +53,11 @@ elif args.action == "read":
                 datetime.datetime.now() - datetime.timedelta(days=2),
                 datetime.datetime.now())
         else:
-            print("error: invalid date format:", args.date)
+            try:
+                d = datetime.datetime.strptime(args.date, "%d/%m/%Y")
+                notes = db.select_date_range(d, d + datetime.timedelta(days=1))
+            except ValueError:
+                print("error: invalid date format:", args.date)
     else:
         notes = db.select_all()
     for n in notes:
