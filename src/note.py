@@ -17,4 +17,5 @@ class Note:
         return self.timestamp == other.timestamp and self.text == other.text
 
     def __str__(self):
-        return "%s\n\t %s" % (self.timestamp, self.text)
+        ts = self.timestamp.strftime("%d/%m/%Y %H:%M")
+        return "%s\n\t %s" % (ts, self.text)
