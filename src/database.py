@@ -2,7 +2,7 @@ import note, sqlite3
 
 class Database:
     def __init__(self, path):
-        self.con = sqlite3.connect(path)
+        self.con = sqlite3.connect(path, detect_types=sqlite3.PARSE_DECLTYPES)
         self.cur = self.con.cursor()
         self.cur.execute("pragma foreign_keys = ON")
         self.cur.execute("""create table if not exists
@@ -29,10 +29,10 @@ class Database:
         self.cur.execute("delete from notes where noteid=?", (id,))
 
     def select_all(self):
-        self.cur.execute("select noteid, notetext, notets from notes order by notets asc")
+        self.cur.execute("select noteid, notets, notetext from notes order by notets asc")
         notes = []
         for row in self.cur.fetchall():
-            notes.append((row[0], note.Note(row[1], row[2])))
+            notes.append((row[0], note.Note(row[2], row[1])))
         return notes
 
     def select_date_range(self, a, b):
