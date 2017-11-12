@@ -34,7 +34,8 @@ if args.action == "write":
         while True:
             try:
                 text = input("notes >>> ")
-                notes.append(note.Note(text))
+                if text != "":
+                    notes.append(note.Note(text))
             except EOFError:
                 break
         for n in notes:
