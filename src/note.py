@@ -1,8 +1,7 @@
 import datetime, re
 
 class Note:
-    def __init__(self, text, timestamp = datetime.datetime.now()):
-        assert(type(timestamp) == datetime.datetime)
+    def __init__(self, text, timestamp):
         self.timestamp = timestamp
         self.set_text(text)
         self.__num = 123

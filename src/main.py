@@ -28,13 +28,14 @@ path = os.path.join(path, "db")
 db = database.Database(path)
 if args.action == "write":
     if args.text:
-        db.insert_note(note.Note(args.text))
+        db.insert_note(note.Note(args.text, datetime.datetime.now()))
     else:
         notes = []
         while True:
             try:
                 text = input("notes >>> ")
-                notes.append(note.Note(text))
+                if text != "":
+                    notes.append(note.Note(text, datetime.datetime.now()))
             except EOFError:
                 break
         for n in notes:
