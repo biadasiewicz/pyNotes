@@ -36,6 +36,8 @@ if args.action == "write":
             try:
                 text = input("notes >>> ")
                 if text != "":
+                    if args.tag:
+                        text = text + ' #' + args.tag
                     notes.append(note.Note(text, datetime.datetime.now()))
             except EOFError:
                 break
