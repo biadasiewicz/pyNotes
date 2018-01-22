@@ -20,15 +20,15 @@ def test_reopen():
 
 def test_insert():
     db = Database(":memory:")
-    n = Note("hello, world #t1 #t2 #t1")
+    n = Note("hello, world #t1 #t2 #t1", datetime.now())
     db.insert_note(n)
     assert(db.count() == 1)
     db.close()
 
 def test_delete():
     db = Database(":memory:")
-    n = Note("hello, world #t1 #t2 #t1")
-    n2 = Note("goodbye #t1 #3")
+    n = Note("hello, world #t1 #t2 #t1", datetime.now())
+    n2 = Note("goodbye #t1 #3", datetime.now())
     db.insert_note(n)
     db.insert_note(n2)
     assert(db.count() == 2)
@@ -58,8 +58,8 @@ def test_select_date_range():
 
 def test_select_tag():
     db = Database(":memory:")
-    n1 = Note("#t1 #t2")
-    n2 = Note("#t1" )
+    n1 = Note("#t1 #t2", datetime.now())
+    n2 = Note("#t1", datetime.now())
     db.insert_note(n1)
     db.insert_note(n2)
     assert(db.count() == 2)

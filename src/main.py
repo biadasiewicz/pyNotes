@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os, argparse, note, database, datetime
 
 parser = argparse.ArgumentParser(
